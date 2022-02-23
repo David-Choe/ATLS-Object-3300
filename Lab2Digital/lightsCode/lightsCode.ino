@@ -31,14 +31,13 @@ void loop() {
   if(current_value == HIGH){
       Serial.print("color");
       for(uint16_t i=0; i<strip.numPixels(); i++) {
-      strip.setPixelColor(i, 150, 0, 150); //set to purple, takes RGB vals 0-255
+      strip.setPixelColor(i, 150, 0, 150); //set to purple
       strip.show();
       delay(500);
     }
 
       for(uint16_t i=0; i<strip.numPixels(); i++) {
-      strip.setPixelColor(i, 0, 150, 150); //set to purple, takes RGB vals 0-255
-      strip.show();
+      strip.setPixelColor(i, 0, 150, 150); //set to blue
       delay(500);
     }
   }
