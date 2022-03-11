@@ -11,21 +11,19 @@ var serial; //variable to hold an instance of the serial port library
 var portName = 'COM3'; //fill in with YOUR port
 var input_x = 0;
 var input_y = 0;
-var button = 0;
+var button = 10;
 
 //Game variables
 var player;
 var bullets;
 var shipImage; 
 var bulletImage;
+var cooldown = 100;
+var maxCD = 100;
 
 var enemy;
-var fastBoi;
 var enemyInterval;
-var fastBoiInterval;
 var enemies;
-var enemyBullet;
-var enemyBullets;
 
 var MARGIN = 40;
 var SCENE_W = 4000;
@@ -114,11 +112,9 @@ function setup() {
     for (let i = 0; i < enemyImage.width; i++) {
       for (let j = 0; j < enemyImage.height; j++) {
         enemyImage.set(i, j, color(100, 50, 92));
-        fastBoiImage.set(i, j, color(50, 50, 255));
       }
     }
   enemyImage.updatePixels();
-  fastBoiImage.updatePixels();
   enemies = new Group();
   
 // set starting condition 
@@ -139,14 +135,16 @@ function draw() {
     camera.position.x=width/2;
     camera.position.y=height/2;
     fill(255);
+    text('Left & Right to rotate; up to accelerate, Press to shoot; Press to begin', windowWidth/2-45, windowHeight/2+32,150);
     text('Your Score:'+score, windowWidth/2-32, windowHeight/2-32,150)
     textSize(16)
     text('Highscore:'+ highscore, windowWidth/2-42, windowHeight/2-64,150)
     textSize(24)
     strokeWeight(4)
+    text('Lab 4', windowWidth/2-96, windowHeight/2-84)
   }
   
-  if(gameOver && keyWentDown('x')) {
+  if(gameOver && button == 0) {
     newGame();
   }
 
@@ -186,25 +184,32 @@ function draw() {
     }    
 
 // movement control  
-    if(keyDown(LEFT_ARROW)) {
-      player.rotation -= 4;
+    if(input_x == 0 || input_x <= 50) {
+      player.rotation += 2;
     }
-    if(keyDown(RIGHT_ARROW)) {
-      player.rotation += 4;
+    if(input_x == 200 || input_x >= 150) {
+      player.rotation -= 2;
     }
-    if(keyDown(UP_ARROW)) {
-        player.addSpeed(5,player.rotation)
+    if(input_y > 150) {
+        player.addSpeed(1,player.rotation)
     }
   
 //shooting
-    if(keyWentDown('z')) {
-      var bullet = createSprite(player.position.x, player.position.y);
-      bullet.addImage(bulletImage);
-      bullet.setSpeed(10+player.getSpeed(), player.rotation);
-      bullet.life = 50;
-      bullet.rotateToDirection = true;
-      bullets.add(bullet);
-      bulletImage.updatePixels();
+    if(button == 0) {
+      //set the attack speed of the button so it's not a machine gun
+      if(cooldown == maxCD){
+        var bullet = createSprite(player.position.x, player.position.y);
+        bullet.addImage(bulletImage);
+        bullet.setSpeed(10+player.getSpeed(), player.rotation);
+        bullet.life = 20;
+        bullet.rotateToDirection = true;
+        bullets.add(bullet);
+        bulletImage.updatePixels();
+        cooldown = 0;
+      }
+      else{
+        cooldown+=20;
+      }
     } 
 
 // set enemy behavior    
@@ -225,7 +230,6 @@ function draw() {
     }
     enemies.overlap(bullets, enemyHit)
     enemies.overlap(player, die)
-    enemyBullets.overlap(player,die)
     
   }//end of !gameover if loop
     
@@ -249,19 +253,6 @@ function drawEnemy() {
   } 
 }
 
-function drawfastBoi() {
-  if (enemies.length<=50) {
-    var ax = random(50, SCENE_W-50);
-    var ay = random(50, SCENE_H-50);
-    fastBoi = createSprite(ax,ay);
-    fastBoi.setCollider('circle', 0, 0, 28);
-    fastBoi.addImage(fastBoiImage);
-    fastBoi.rotateToDirection=true;
-    fastBoi.maxSpeed = 10;
-    enemies.add(fastBoi); 
-  } 
-}
-
 function enemyHit(enemy, bullet) {
   for (let i=0; i<enemies.length;i++) {
     en = enemies[i];  
@@ -272,11 +263,8 @@ function enemyHit(enemy, bullet) {
       } 
     }
   }
-    
-    
   enemy.remove();
   bullet.remove();
-  
   if (enemy.maxSpeed==8) {
     score+=5; //need to fix this, still only adding 1
   }
@@ -292,15 +280,11 @@ function die() {
   enemies.removeSprites();
   bullets.removeSprites();
   updateSprites(false);
-  //animation for ship exploding here
   gameOver = true;
   gravity=0;
   player.velocity.x=0;
   player.velocity.y=0;
   clearInterval(enemyInterval);
-  //clearInterval(shootingInterval);
-  clearInterval(fastBoiInterval);
-  //camera.off();
   storeItem('highscore', highscore)
 }
 
@@ -315,8 +299,6 @@ function newGame() {
   player.rotation=0;
   gravity=0.3;
   enemyInterval = setInterval(drawEnemy, 1000); //call function to draw enemy every 1s
-  //shootingInterval = setInterval(enemyShoot, 1000); //call function for enemy to shoot every 1s
-  fastBoiInterval = setInterval(drawfastBoi, random(10000, 30000)); //call function to draw fast enemy between 10 and 30 seconds
   score=0;
   drawSprites();
 }
@@ -338,10 +320,10 @@ function serialEvent(){
   if(data === "")return;
   var split = data.split(',');
   ///console.log(split[0],split[1],split[2]);
-  button = map(split[0], 0, 1010, 0, 1);
-  input_x = map(split[1], 0,1023,0,350);
-  input_y = map(split[2], 0,1023,0,350);
-  console.log(button, input_x, input_y);
+  button = split[0];
+  input_x = map(split[1], 0,1023,0,200);
+  input_y = map(split[2], 0,1023,0,200);
+  //console.log(button, input_x, input_y);
 }
 
 function serialError(err){
