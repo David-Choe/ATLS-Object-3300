@@ -97,7 +97,7 @@
 #define PIN 11
 // input pin Neopixel is attached to
 
-#define NUMPIXELS 4
+#define NUMPIXELS 8
 // number of neopixels in Ring
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -118,11 +118,12 @@ int buttonF = 0;
 int buttonG = 0;
 
 int speaker = 9;
-int duration = 250;
+int delayTime = 250;
 
 void setup() {
   pixels.begin(); // Initializes the NeoPixel library.
   Serial.begin(9600);
+  pinMode(speaker,OUTPUT);
 }
 
 void loop() {
@@ -139,14 +140,16 @@ void loop() {
       redColor = 255;
       greenColor = 0;
       blueColor = 0;
-      tone(speaker, NOTE_A4, duration);
-        Serial.print("one\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_C4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("one\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
   
     else if (buttonB == HIGH){
@@ -154,14 +157,16 @@ void loop() {
       redColor = 200;
       greenColor = 100;
       blueColor = 0;
-      tone(speaker, NOTE_B4, duration);
-        Serial.print("two\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor); 
+      tone(speaker, NOTE_D4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("two\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor); 
     }
   
     else if (buttonC == HIGH){
@@ -169,14 +174,16 @@ void loop() {
       redColor = 0;
       greenColor = 255;
       blueColor = 255;
-      tone(speaker, NOTE_C3, duration);
-        Serial.print("three\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_E4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("three\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
 
     else if (buttonD == HIGH){
@@ -184,14 +191,16 @@ void loop() {
       redColor = 0;
       greenColor = 255;
       blueColor = 0;
-      tone(speaker, NOTE_D3, duration);
-        Serial.print("four\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_F4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("four\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
 
     else if (buttonE == HIGH){
@@ -199,14 +208,16 @@ void loop() {
       redColor = 0;
       greenColor = 0;
       blueColor = 255;
-      tone(speaker, NOTE_E3, duration);
-        Serial.print("five\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_G4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("five\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
 
     else if (buttonF == HIGH){
@@ -214,14 +225,16 @@ void loop() {
       redColor = 100;
       greenColor = 100;
       blueColor = 255;
-      tone(speaker, NOTE_F3, duration);
-        Serial.print("six\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_A4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("six\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
 
     else if (buttonG == HIGH){
@@ -229,14 +242,16 @@ void loop() {
       redColor = 255;
       greenColor = 0;
       blueColor = 255;
-      tone(speaker, NOTE_G3, duration);
-        Serial.print("seven\n");
-        Serial.print("red: ");
-        Serial.println(redColor);
-        Serial.print("green: ");
-        Serial.println(greenColor);
-        Serial.print("blue: ");
-        Serial.println(blueColor);
+      tone(speaker, NOTE_B4);
+      delay(delayTime);
+      noTone(speaker);
+//        Serial.print("seven\n");
+//        Serial.print("red: ");
+//        Serial.println(redColor);
+//        Serial.print("green: ");
+//        Serial.println(greenColor);
+//        Serial.print("blue: ");
+//        Serial.println(blueColor);
     }
 
 //    else{
