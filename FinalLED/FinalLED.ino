@@ -3,7 +3,7 @@
 #define PIN 11
 // input pin Neopixel is attached to
 
-#define NUMPIXELS 8
+#define NUMPIXELS 19
 // number of neopixels in Ring
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);

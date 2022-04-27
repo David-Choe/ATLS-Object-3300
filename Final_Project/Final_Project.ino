@@ -97,7 +97,7 @@
 #define PIN 11
 // input pin Neopixel is attached to
 
-#define NUMPIXELS 8
+#define NUMPIXELS 19
 // number of neopixels in Ring
 
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
@@ -143,13 +143,13 @@ void loop() {
       tone(speaker, NOTE_C4);
       delay(delayTime);
       noTone(speaker);
-//        Serial.print("one\n");
-//        Serial.print("red: ");
-//        Serial.println(redColor);
-//        Serial.print("green: ");
-//        Serial.println(greenColor);
-//        Serial.print("blue: ");
-//        Serial.println(blueColor);
+        Serial.print("one\n");
+        Serial.print("red: ");
+        Serial.println(redColor);
+        Serial.print("green: ");
+        Serial.println(greenColor);
+        Serial.print("blue: ");
+        Serial.println(blueColor);
     }
   
     else if (buttonB == HIGH){
@@ -178,12 +178,12 @@ void loop() {
       delay(delayTime);
       noTone(speaker);
 //        Serial.print("three\n");
-//        Serial.print("red: ");
-//        Serial.println(redColor);
-//        Serial.print("green: ");
-//        Serial.println(greenColor);
-//        Serial.print("blue: ");
-//        Serial.println(blueColor);
+        Serial.print("red: ");
+        Serial.println(redColor);
+        Serial.print("green: ");
+        Serial.println(greenColor);
+        Serial.print("blue: ");
+        Serial.println(blueColor);
     }
 
     else if (buttonD == HIGH){
